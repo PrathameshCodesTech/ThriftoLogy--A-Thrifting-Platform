@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Thriftology - Sustainable Fashion{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body class="bg-white text-black font-sans">
+    <div id="app">
+        {% include 'header.html' %}
+
+
+        <!-- Main Content Area -->
+        {% block herosection %}
+        <main class="pt-32 max-w-7xl mx-auto px-4">
+            <!-- Hero Section -->
+            <section class="mb-12 relative">
+                <div id="slider-container" class="relative overflow-hidden">
+                    <div class="slider-slide">
+                        <video autoplay loop muted class="w-full h-[500px] object-cover">
+                            <source src="{% static 'videos/video1.mp4' %}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                            <div class="text-white text-center">
+                                <h1 class="text-4xl font-bold mb-4">Sustainable Style</h1>
+                                <p class="text-xl mb-6">Unique Finds, Unbeatable Prices</p>
+                                <p class="bg-white text-black px-8 py-3">Shop Now.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-slide hidden">
+                        <video autoplay loop muted class="w-full h-[500px] object-cover">
+                            <source src="{% static 'videos/Inbus.mp4' %}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                            <div class="text-white text-center">
+                                <h1 class="text-4xl font-bold mb-4">Vintage Collection</h1>
+                                <p class="text-xl mb-6">Timeless Pieces, Modern Looks</p>
+                                <p class="bg-white text-black px-8 py-3">Explore Now.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slider-slide hidden">
+                        <video autoplay loop muted class="w-full h-[500px] object-cover">
+                            <source src="{% static 'videos/inroom.mp4' %}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                            <div class="text-white text-center">
+                                <h1 class="text-4xl font-bold mb-4">Unique Collection</h1>
+                                <p class="text-xl mb-6">Distinctive Pieces, Modern Looks</p>
+                                <p class="bg-white text-black px-8 py-3">Explore our unique collection and find your
+                                    style.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+
+
+
+        <div class="text-2xl font-bold flex justify-center items-center text-center">
+            <span class="text-black">Beyond fashion,</span>
+            <span class="text-gray-500"> we craft stories and experiences</span>
+        </div><br>
+
+        {% endblock %}
+
+
+        <!-- Product Grid -->
+        {% block product-grid %}
+
+        <section id="product-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="border p-4"> <img src="p.jpg" alt="Vintage Denim Jacket">
+                <h2 class="text-lg font-bold my-2">Vintage Denim Jacket</h2>
+                <p class="text-sm text-gray-600">Outerwear</p>
+                <p class="text-red-500 font-bold">$45.99</p>
+                <p class="text-gray-500 line-through">$120.00</p>
+            </div>
+
+            <div class="border p-4"> <img src="p2.jpg" alt="Classic Leather Boots">
+                <h2 class="text-lg font-bold my-2">Classic Leather Boots</h2>
+                <p class="text-sm text-gray-600">Footwear</p>
+                <p class="text-red-500 font-bold">$79.99</p>
+                <p class="text-gray-500 line-through">$250.00</p>
+            </div>
+
+            <div class="border p-4"> <img src="p4.jpg" alt="Retro Printed Shirt">
+                <h2 class="text-lg font-bold my-2">Retro Printed Shirt</h2>
+                <p class="text-sm text-gray-600">Tops</p>
+                <p class="text-red-500 font-bold">$29.99</p>
+                <p class="text-gray-500 line-through">$80.00</p>
+            </div>
+
+
+            <div class="border p-4"> <img src="p1.jpg" alt="Oversized Knit Sweater">
+                <h2 class="text-lg font-bold my-2">Oversized Knit Sweater</h2>
+                <p class="text-sm text-gray-600">Knitwear</p>
+                <p class="text-red-500 font-bold">$55.99</p>
+                <p class="text-gray-500 line-through">$150.00</p>
+            </div>
+
+
+            <div class="border p-4"> <img src="p.jpg" alt="Oversized Knit Sweater">
+                <h2 class="text-lg font-bold my-2">Oversized Knit Sweater</h2>
+                <p class="text-sm text-gray-600">Knitwear</p>
+                <p class="text-red-500 font-bold">$55.99</p>
+                <p class="text-gray-500 line-through">$150.00</p>
+            </div>
+
+        </section>
+
+        {% endblock %}
+
+        {% include 'footer.html' %}
+    </div>
+
+    {% block extra_js %}<script src="{% static 'js/base.js' %}"></script>{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+/* Custom styles to enhance product hover and image display */
+.product-hover-overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-item:hover .product-hover-overlay {
+    opacity: 1;
+}
+
+.product-image {
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+/* Newsletter input styling */
+#newsletter-input {
+    border: 1px solid #e5e7eb;
+    transition: border-color 0.3s ease;
+}
+
+#newsletter-input:focus {
+    outline: none;
+    border-color: #000;
+}
+
+

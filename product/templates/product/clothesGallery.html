@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/clothesGallery.css' %}">
+{% endblock %}
+    
+{% block product-grid %}
+
+<section id="product-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    {% for product in products %}
+    <div class="border p-4">
+        <div class="video-container">
+            <a href="#">
+                <img src="{{ product.image.url }}" alt="{{ product.description }}">
+            </a>
+            {% if product.video %}
+            <video class="hidden" src="{{ product.video.url }}" loop muted></video>
+            {% endif %}
+        </div>
+        <h2 class="text-lg font-bold my-2">{{ product.name }}</h2>
+        <p class="text-sm text-gray-600">{{ product.era }}</p>
+        <p class="text-sm text-gray-600">{{ product.material }}</p>
+        <p class="text-red-500 font-bold">₹ {{ product.selling_price }}</p>
+        <p class="text-gray-500 line-through">₹ {{ product.discounted_price }}</p>
+        <br>
+        <a href="{% url 'Detail'  pk=product.id %}">
+            <button class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">View More</button>
+        </a>
+    </div>
+    {% endfor %}
+</section>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/clothesGallery.js' %}"></script>
+{% endblock %}
+

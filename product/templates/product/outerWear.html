@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/clothesGallery.css' %}">
+{% endblock %}
+{% block title %}Thriftology - OuterWear {% endblock %}
+
+{% block herosection %}
+
+<!-- Main Content -->
+
+<br>
+<main class="pt-32 max-w-7xl mx-auto px-4">
+    <h1 class="collection-title text-3xl font-bold mb-8">Outerwear Collection</h1>
+    
+    <form method="GET" class="search-container mb-8">
+        <input type="text" name="query" class="search-input border px-4 py-2 rounded-full w-full md:w-1/2" placeholder="Search outerwear..." value="">
+        <button type="submit" class="search-button bg-black text-white px-4 py-2 rounded-full ml-2">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+        </button>
+    </form>
+
+
+    <div class="mb-8 flex flex-col md:flex-row justify-between items-center">
+        <div class="space-x-4 mb-4 md:mb-0">
+            <a href="?brand=All" class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition">All</a>
+            {% for brand in brands %}
+            <a href="?brand={{ brand }}" class="bg-gray-100 px-6 py-2 rounded-full hover:bg-gray-200 transition">{{ brand }}</a>
+            {% endfor %}
+        </div>
+        <form method="GET" class="flex items-center">
+            <input type="hidden" name="query" value="{{ query }}">
+            <input type="hidden" name="brand" value="{{ selected_brand }}">
+            <select name="sort_by" class="border px-4 py-2 rounded-full focus:outline-none focus:border-black" onchange="this.form.submit()">
+                <option value="newest" {% if selected_sort == 'newest' %}selected{% endif %}>Sort by: Price</option>
+                <option value="low_to_high" {% if selected_sort == 'low_to_high' %}selected{% endif %}>Price: Low to High</option>
+                <option value="high_to_low" {% if selected_sort == 'high_to_low' %}selected{% endif %}>Price: High to Low</option>
+            </select>
+        </form>
+    </div>
+
+{% endblock %}
+
+
+{% block product-grid %}
+
+    <section id="product-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {% for product in products %}
+        <div class="border p-4">
+            <div class="video-container">
+                <a href="#">
+                    <img src="{{ product.image.url }}" alt="{{ product.description }}">
+                </a>
+                {% if product.video %}
+                <video class="hidden" src="{{ product.video.url }}" loop muted></video>
+                {% endif %}
+            </div>
+            <h2 class="text-lg font-bold my-2">{{ product.name }}</h2>
+            <p class="text-sm text-gray-600">{{ product.era }}</p>
+            <p class="text-sm text-gray-600">{{ product.material }}</p>
+            <p class="text-red-500 font-bold">₹ {{ product.selling_price }}</p>
+            <p class="text-gray-500 line-through">₹ {{ product.discounted_price }}</p>
+            <br>
+            <a href="{% url 'Detail' pk=product.id %}">
+                <button class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">View More</button>
+            </a>
+        </div>
+        {% endfor %}
+    </section>
+
+
+{% endblock %}
+
+    {% block extra_js %}
+    <script src="{% static 'js/clothesGallery.js' %}"></script>
+    {% endblock %}
