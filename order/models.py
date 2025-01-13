@@ -20,7 +20,7 @@ class OrderPlaced(models.Model):
     
 
 class ShippingAddress(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user= models.ForeignKey(User, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order = models.ForeignKey(OrderPlaced, on_delete=models.CASCADE)
     address = models.TextField()

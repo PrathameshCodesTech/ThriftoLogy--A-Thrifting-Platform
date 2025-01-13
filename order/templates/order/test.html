@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_head %}
+<style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem 0;
+            border: none;
+            border-bottom: 2px solid #e5e7eb;
+            background: transparent;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-bottom-color: #000;
+        }
+
+        .input-group input::placeholder {
+            color: #9ca3af;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus::placeholder {
+            transform: translateY(-10px);
+            font-size: 0.8rem;
+            opacity: 0;
+        }
+
+        .animate-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .custom-checkbox {
+            position: relative;
+            cursor: pointer;
+            padding-left: 30px;
+            user-select: none;
+        }
+
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #fff;
+            border: 2px solid #e5e7eb;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .custom-checkbox:hover input ~ .checkmark {
+            border-color: #000;
+        }
+
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #000;
+            border-color: #000;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .continue-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .continue-btn:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .continue-btn:hover:after {
+            left: 100%;
+        }
+        .address-selection {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+        }
+    </style>
+{% endblock %}
+
+{% block herosection %}
+<main class="pt-28 pb-24 max-w-2xl mx-auto px-6">
+    <div class="flex items-center mb-12 animate-in" style="animation-delay: 0.1s">
+        <button class="p-2 hover:bg-gray-100 rounded-full transition-colors" onclick="history.back()">
+            <i data-feather="arrow-left" class="w-6 h-6"></i>
+        </button>
+        <h1 class="text-2xl font-medium ml-4">Delivery Details</h1>
+    </div>
+
+    <div class="container">
+        <div class="row mt-5">
+         <div class="col-sm-6">
+           <h4>Order Summary</h4>
+           <hr>
+           {% for item in cart_items %}
+             <div class="card mb-2">
+               <div class="card-body">
+                 <h5>Product: {{item.product.brand}}</h5>
+                 <p>Quantity: {{item.quantity}}</p>
+                 <p class="fw-bold">Price: {{item.total_cost}}</p>
+               </div>
+             </div>
+           {% endfor %}
+           <p class="fw-bold">Total Cost + Rs. 70  = {{total_amount}}</p>
+           <small>(Rs. 70 Delivery Charge)</small> <hr>
+           <small>Term and Condition: Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, ullam saepe! Iure optio repellat dolor velit, minus rem. Facilis cumque neque numquam laboriosam, accusantium adipisci nisi nihil in et quis?</small>
+         </div>
+         <div class="col-sm-4 offset-sm-1">
+           <h4>Select Shipping Address</h4>
+           <hr>
+           <form action="/paymentdone" id="myform">
+           {% for ad in add %}
+             <div class="card">
+               <div class="card-body">
+               <h5>{{ad.name}}</h5>
+               <p>{{ad.locality}}, {{ad.city}}, {{ad.state}}- {{ad.zipcode}}</p>
+               </div>
+             </div>
+               <div class="form-check mt-2 mb-5">
+                 <input class="form-check-input" type="radio" name="custid" id="custadd{{forloop.counter}}" value="{{ad.id}}" checked>
+                 <label class="form-check-label fw-bold" for="custadd{{forloop.counter}}">
+                   Address: {{ forloop.counter }} </label>
+               </div>
+             {% endfor %}
+               <div class="border p-3">
+                 {% comment %} <button type="submit" class="btn btn-warning mt-3 px-5 fw-bold" id="continuebtn">Continue</button> {% endcomment %}
+                 <!-- Set up a container element for the button -->
+                 <p class="fw-bold">Payment Options:</p>
+                 <div id="paypal-button-container"></div>
+               </div>
+             </form>
+           </div>
+         </div>
+       </div>
+       
+</main>
+{% endblock %}
+
+{% block product-grid %}
+
+<form method="POST">
+    {% csrf_token %}
+    <p>{{ form.as_p }}</p>
+    <input type="submit" value="Submit">
+</form>
+
+
+    <div class="fixed bottom-0 left-0 w-full bg-white border-t shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] animate-in">
+        <div class="max-w-2xl mx-auto flex justify-between items-center px-6 py-4">
+            <div class="text-sm">
+                TOTAL <span class="font-bold ml-2 text-lg">₹ {{ total_amount }}</span>
+            </div>
+            <button type="submit" class="continue-btn bg-black text-white px-10 py-3 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-all">
+                CONTINUE
+            </button>
+        </div>
+    </div>
+
+</main>
+
+{% endblock %}
+

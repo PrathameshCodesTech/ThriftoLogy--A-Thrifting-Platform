@@ -36,7 +36,12 @@ class Cart(models.Model):
         return f'{self.quantity} of {self.product.name}'
     
 
+    # Below Property will be used by checkout.html page to show total cost in order summary
+    @property
+    def total_cost(self):
+        return self.quantity * self.product.discounted_price
 
+    
 #REVIEW - Extra
 
 class Wishlist(models.Model):
@@ -46,3 +51,5 @@ class Wishlist(models.Model):
 
     def __str__(self):
         return f'{self.user.username} wishes for {self.product.name}'
+    
+    

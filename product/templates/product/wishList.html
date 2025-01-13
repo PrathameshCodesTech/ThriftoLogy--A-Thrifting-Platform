@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Thriftology - Wishlist{% endblock %}
+
+{% block herosection %}
+<main class="pt-32 max-w-7xl mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-8">My Wishlist</h1>
+
+    {% if messages %}
+    <div class="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md">
+        {% for message in messages %}
+        <div class="bg-white border border-green-100 rounded-lg shadow-lg p-4 mb-4 animate-fade-in">
+            <p class="text-sm font-medium text-gray-900">{{ message }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if not wishlist_items %}
+    <!-- Empty wishlist state -->
+    <div class="text-center py-16">
+        <div class="mx-auto w-24 h-24 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-full h-full text-gray-300">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+        </div>
+        <h2 class="text-xl font-medium mb-2">Your wishlist is empty</h2>
+        <p class="text-gray-500 mb-6">Browse our collections and add your favorite items</p>
+        <a href="{% url 'Home' %}" class="inline-block bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition">
+            Explore Collections
+        </a>
+    </div>
+    {% else %}
+    <!-- Wishlist grid -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {% for item in wishlist_items %}
+        <div class="border p-4 relative">
+            <form method="POST" action="{% url 'remove_from_wishlist' item.product.id %}" class="absolute top-6 right-6">
+                {% csrf_token %}
+                <button type="submit" class="text-red-500 hover:text-red-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                </button>
+            </form>
+            
+            <div class="video-container">
+                <a href="{% url 'Detail' pk=item.product.id %}">
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.description }}" class="w-full h-auto">
+                </a>
+            </div>
+            <h2 class="text-lg font-bold my-2">{{ item.product.name }}</h2>
+            <p class="text-sm text-gray-600">{{ item.product.era }}</p>
+            <p class="text-sm text-gray-600">{{ item.product.material }}</p>
+            <p class="text-red-500 font-bold">₹ {{ item.product.discounted_price }}</p>
+            <p class="text-gray-500 line-through">₹ {{ item.product.selling_price }}</p>
+            
+            <div class="mt-4 space-y-2">
+                <form method="GET" action="{% url 'Add_Cart' %}">
+                    <input type="hidden" name="prod_id" value="{{ item.product.id }}">
+                    <button type="submit" class="w-full bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
+                        Add to Cart
+                    </button>
+                </form>
+                
+                <form method="POST" action="{% url 'remove_from_wishlist' item.product.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="w-full border border-black px-4 py-2 rounded hover:bg-gray-100">
+                        Remove
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+</main>
+{% endblock %}
+
+{% block product-grid %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    feather.replace(); // Initializes feather icons
+</script>
+
+{% endblock %}

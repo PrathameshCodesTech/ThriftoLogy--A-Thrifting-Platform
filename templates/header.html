@@ -17,56 +17,65 @@
         <!-- Middle Section - Username -->
         <div class="hidden md:block">
             {% if user.is_authenticated %}
-                <span class="text-sm uppercase tracking-wider">Welcome, {{ user.username }}</span>
+            <span class="text-sm uppercase tracking-wider">Welcome, {{ user.username }}</span>
             {% endif %}
         </div>
 
         <!-- Right Section -->
         <div class="flex items-center space-x-6">
             {% if user.is_authenticated %}
-                <!-- Hearts and Cart -->
-                <button id="heart-button" class="hover:text-gray-600">
-                    <i data-feather="shopping-bag"></i>
-                </button>
-                <button id="cart-button" class="relative hover:text-gray-600">
+            <!-- Hearts and Cart -->
+             <a href="{% url 'wishlist' %}">
+            <button id="heart-button" class="hover:text-gray-600">
+                <i data-feather="shopping-bag"></i>
+            </button>
+            </a>
+
+            <button id="cart-button" class="relative hover:text-gray-600">
+                <a href="{% url 'Add_Cart' %}">
                     <i data-feather="shopping-cart"></i>
-                    <span id="cart-count" 
-                          class="hidden absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                    <span id="cart-count"
+                        class="hidden absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                     </span>
+                </a>
+            </button>
+
+            <!-- User Dropdown -->
+            <div class="relative">
+                <button id="user-menu-button" class="flex items-center hover:text-gray-600">
+                    <i data-feather="user" class="h-7 w-7"></i>
                 </button>
 
-                <!-- User Dropdown -->
-                <div class="relative">
-                    <button id="user-menu-button" class="flex items-center hover:text-gray-600">
-                        <i data-feather="user" class="h-7 w-7"></i>
-                    </button>
-                    
-                    <!-- Dropdown Menu -->
-                    <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5">
-                        <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            My Profile
-                        </a>
-                        <a href="{% url 'password_change' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            Change Password
-                        </a>
-                        <a href="{% url 'password_reset' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                            Forgot Password
-                        </a>
-                        <form action="{% url 'logout' %}" method="POST" class="block">
-                            {% csrf_token %}
-                            <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                Logout
-                            </button>
-                        </form>
-                    </div>
+                <!-- Dropdown Menu -->
+                <div id="user-dropdown"
+                    class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5">
+                    <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        My Profile
+                    </a>
+                    <a href="{% url 'password_change' %}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Change Password
+                    </a>
+                    <a href="{% url 'password_reset' %}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Forgot Password
+                    </a>
+                    <form action="{% url 'logout' %}" method="POST" class="block">
+                        {% csrf_token %}
+                        <button type="submit"
+                            class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            Logout
+                        </button>
+                    </form>
                 </div>
+            </div>
             {% else %}
-                <a href="{% url 'login' %}" class="text-sm uppercase tracking-wider hover:text-gray-600">
-                    Login
-                </a>
-                <a href="{% url 'register' %}" class="text-sm uppercase tracking-wider hover:text-gray-600">
-                    Register
-                </a>
+            <a href="{% url 'login' %}" class="text-sm uppercase tracking-wider hover:text-gray-600">
+                Login
+            </a>
+            <a href="{% url 'register' %}" class="text-sm uppercase tracking-wider hover:text-gray-600">
+                Register
+            </a>
             {% endif %}
         </div>
     </div>
@@ -101,8 +110,9 @@
 {% endblock %}
 
 <style>
-    #user-menu-button:focus + #user-dropdown,
+    #user-menu-button:focus+#user-dropdown,
     #user-dropdown:hover {
         display: block;
     }
 </style>
+
