@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block herosection %}
+<!-- Hero Section -->
+<section class="pt-32 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 py-16">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Everything you need to know about shopping second-hand fashion with Thriftology</p>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Categories -->
+<section class="py-16">
+    <div class="max-w-4xl mx-auto px-4">
+        <!-- Product Availability -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">Product Availability</h2>
+            
+            <div class="space-y-6">
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">Why can't I find multiple sizes of the same item?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">As a thrift store, each piece in our collection is unique and one-of-a-kind. We source pre-loved items, which means we typically only have one size available for each style. This makes our pieces exclusive and special!</p>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">How often do you restock items?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">We update our inventory daily with new finds! Since each item is unique, we recommend checking back frequently or following our social media for updates on new arrivals.</p>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">What if I miss out on an item I love?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">Due to the unique nature of thrifted fashion, exact items usually can't be restocked. However, you can sign up for notifications to be alerted when similar items in your size become available.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Quality -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">Product Quality</h2>
+            
+            <div class="space-y-6">
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">How do you ensure the quality of second-hand items?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">Each item goes through a rigorous quality check process. We examine for any damage, verify authenticity, clean and sanitize items, and make minor repairs if needed. Only pieces that meet our quality standards are listed.</p>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">What is your condition rating system?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">We use a detailed condition rating system:</p>
+                        <ul class="list-disc ml-6 mt-2 space-y-2">
+                            <li>Like New: Shows no signs of wear</li>
+                            <li>Excellent: Minor signs of wear, no visible flaws</li>
+                            <li>Very Good: Light wear, minor fixable flaws noted in description</li>
+                            <li>Good: Normal wear, any flaws clearly documented</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shopping & Returns -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">Shopping & Returns</h2>
+            
+            <div class="space-y-6">
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">Can I return items if they don't fit?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">Yes! We offer a 14-day return policy for store credit. Due to the unique nature of our items, we encourage reading size measurements carefully before purchasing.</p>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">How do you price your items?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">Our pricing reflects the item's original retail value, current condition, brand, rarity, and vintage status. We aim to provide fair prices that make sustainable fashion accessible while supporting our mission.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sustainability -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">Sustainability</h2>
+            
+            <div class="space-y-6">
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">How does buying thrifted clothing help the environment?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">Each thrifted item purchased reduces demand for new production, saving water and reducing carbon emissions. By choosing pre-loved clothing, you're helping extend the lifecycle of garments and reducing textile waste.</p>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">What sustainable practices do you follow?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">We use eco-friendly cleaning products, recyclable packaging, and minimize waste in our operations. We also partner with textile recycling programs for items we can't sell.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact CTA -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+        <h2 class="text-2xl font-bold mb-4">Still have questions?</h2>
+        <p class="text-gray-600 mb-8">We're here to help! Contact our customer service team.</p>
+        <div class="flex justify-center space-x-4">
+            <a href="{% url 'FAQ' %}" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800">Contact Us</a>
+            <a href="#" class="border border-black px-6 py-3 rounded hover:bg-gray-100">Live Chat</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block product-grid %}
+{% endblock %}
+
+
+
+
+{% block extra_js %}
+
+<script src="{% static 'js/clothesGallery.js' %}"></script>
+<script>
+    // Toggle FAQ answers
+    document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('click', () => {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            answer.classList.toggle('hidden');
+            icon.dataset.feather = answer.classList.contains('hidden') ? 'plus' : 'minus';
+            feather.replace();
+        });
+    });
+</script>
+{% endblock %}

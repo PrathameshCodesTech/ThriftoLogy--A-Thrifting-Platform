@@ -3,7 +3,7 @@ from customer.views import CustomerRegistrationView
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from customer.forms import LoginForm,MyPasswordChangeForm,MyPasswordResetForm,MySetPasswordForm
-from customer.views import CustomerRegistrationView, CustomPasswordChangeView,ProfileView
+from customer.views import CustomerRegistrationView, CustomPasswordChangeView,ProfileView,About,Faq,Reviews
 
 urlpatterns = [
     
@@ -50,4 +50,9 @@ urlpatterns = [
      # profile
 
      path('profile/', ProfileView.as_view(), name='profile'),
+
+
+     path('about-us/', About, name='aboutus'),
+     path('FAQ/', Faq, name='FAQ'),
+     path('reviews/', Reviews, name='review'),
 ]

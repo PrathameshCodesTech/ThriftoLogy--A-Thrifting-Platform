@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block herosection %}
+<!-- Hero Section -->
+<section class="pt-32 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 py-16">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-4">About Thriftology</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Redefining Fashion, One Vintage Piece at a Time</p>
+        </div>
+    </div>
+</section>
+
+<!-- Mission Statement -->
+<section class="py-16">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl font-bold mb-6">Our Mission</h2>
+                <p class="text-gray-600 mb-4">At Thriftology, we're on a mission to revolutionize the fashion industry by promoting sustainable, second-hand fashion. We believe that style shouldn't come at the expense of our planet.</p>
+                <p class="text-gray-600">Every piece in our collection tells a unique story and contributes to reducing fashion waste, making sustainable fashion accessible to everyone.</p>
+            </div>
+            <div class="rounded-lg overflow-hidden shadow-lg">
+                <img src="{% static 'images/test.jpg' %}" alt="Sustainable Fashion" class="object-cover" style="width: 100%; height: 25rem;" >
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Our Values</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center p-6">
+                <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-black rounded-full">
+                    <i data-feather="refresh-cw" class="text-white"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4">Sustainability</h3>
+                <p class="text-gray-600">Promoting circular fashion by giving pre-loved clothing a second life and reducing fashion waste.</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-black rounded-full">
+                    <i data-feather="heart" class="text-white"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4">Quality</h3>
+                <p class="text-gray-600">Carefully curating high-quality vintage pieces that stand the test of time.</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-black rounded-full">
+                    <i data-feather="users" class="text-white"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-4">Community</h3>
+                <p class="text-gray-600">Building a community of conscious consumers who value sustainable fashion.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Impact Stats -->
+<section class="py-16">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Our Impact</h2>
+        <div class="grid md:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="text-4xl font-bold mb-2">5K+</div>
+                <p class="text-gray-600">Items Resold</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold mb-2">2000+</div>
+                <p class="text-gray-600">Happy Customers</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold mb-2">10K+</div>
+                <p class="text-gray-600">KG of Clothes Saved</p>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold mb-2">100%</div>
+                <p class="text-gray-600">Sustainable Packaging</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Meet Our Team</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
+                    <img src="{% static 'images/team1.jpeg' %}" alt="Team Member" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-xl font-bold mb-2">Sarah Johnson</h3>
+                <p class="text-gray-600">Founder & CEO</p>
+            </div>
+            <div class="text-center">
+                <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
+                    <img src="{% static 'images/team2.jpg' %}" alt="Team Member" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-xl font-bold mb-2">Mike Chen</h3>
+                <p class="text-gray-600">Head of Curation</p>
+            </div>
+            <div class="text-center">
+                <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
+                    <img src="{% static 'images/team3.jpg' %}" alt="Team Member" class="w-full h-full object-cover">
+                </div>
+                <h3 class="text-xl font-bold mb-2">Emma Davis</h3>
+                <p class="text-gray-600">Sustainability Director</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block product-grid %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/clothesGallery.js' %}"></script>
+{% endblock %}
