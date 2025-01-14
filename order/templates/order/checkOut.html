@@ -133,16 +133,6 @@
 
     <form method="POST" class="space-y-8">
         {% csrf_token %}
-        
-        {% if has_registered_address %}
-        <div class="mb-6">
-            <label class="custom-checkbox text-sm text-gray-600">
-                Use registered address
-                <input type="checkbox" name="use_registered_address" id="use_registered_address">
-                <span class="checkmark"></span>
-            </label>
-        </div>
-        {% endif %}
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2" id="address_form">
             <!-- Left Column -->

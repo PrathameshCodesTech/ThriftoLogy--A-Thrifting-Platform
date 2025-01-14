@@ -19,4 +19,4 @@ class AddressSelectionForm(forms.Form):
 class ShippingAddressForm(forms.ModelForm):
     class Meta:
         model = ShippingAddress
-        fields = '__all__'
+        fields = ['customer', 'phone', 'address', 'city', 'state', 'zip_code', 'email']
