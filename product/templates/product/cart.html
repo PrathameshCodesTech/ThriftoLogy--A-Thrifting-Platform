@@ -14,11 +14,8 @@
         {% for message in messages %}
         <div class="bg-white border border-green-100 rounded-lg shadow-lg p-4 mb-4 animate-fade-in flex items-start">
             <div class="flex-shrink-0 mr-3">
-                <svg class="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                    fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clip-rule="evenodd" />
+                <svg class="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                 </svg>
             </div>
             <div class="flex-1">
@@ -29,114 +26,138 @@
     </div>
     {% endif %}
 
-    <div class="grid md:grid-cols-3 gap-8">
-        <section class="md:col-span-2 space-y-6">
-            <!-- Single Cart Item Template -->
-            {% for cart in carts %}
-            <div class="bg-white p-6 rounded-lg shadow-sm flex space-x-6"
-                data-price="{{ cart.product.discounted_price }}">
-                <img src="{{cart.product.image.url}}" alt="{{ cart.product.name }}"
-                    class="w-48 h-56 object-cover rounded" />
-                <div class="flex-grow">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="text-xl font-medium">{{cart.product.name}}</h3>
-                            <p class="text-gray-500 mt-1">Size: M</p>
-                            <p class="text-gray-500 mt-1">Color: Color</p>
-                            <p class="text-red-500 font-bold text-xl mt-3">{{ cart.product.discounted_price }}</p>
-                            <p class="text-gray-500 line-through">{{ cart.product.selling_price }}</p>
-                        </div>
-                        <button class="text-gray-400 hover:text-gray-600 remove-item">
-                            <i data-feather="x"></i>
-                        </button>
-                    </div>
-                    <!-- Replace the quantity buttons section with this -->
-                    <div class="mt-6">
-                        <div class="flex items-center">
-                            <form method="POST" action="{% url 'update_cart_quantity' cart.id %}" class="inline">
-                                {% csrf_token %}
-                                <input type="hidden" name="action" value="decrease">
-                                <button type="submit" class="border rounded-l px-4 py-2 hover:bg-gray-100">-</button>
-                            </form>
-
-                            <input type="number" value="{{ cart.quantity }}" min="1"
-                                class="border-t border-b w-20 py-2 text-center" readonly />
-
-                            <form method="POST" action="{% url 'update_cart_quantity' cart.id %}" class="inline">
-                                {% csrf_token %}
-                                <input type="hidden" name="action" value="increase">
-                                <button type="submit" class="border rounded-r px-4 py-2 hover:bg-gray-100">+</button>
-                            </form>
-                        </div>
-                    </div>
-                    <br>
-                    <!-- Replace the remove button with this -->
-                    <form method="POST" action="{% url 'remove_from_cart' cart.id %}" class="inline">
-                        {% csrf_token %}
-                        <button type="submit" class="add-to-cart w-full bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition duration-300">
-                            remove
-                        </button>
-                    </form>
-                </div>
-            </div>
-            {% endfor %}
-        </section>
-
-        <aside class="space-y-6">
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <h2 class="text-xl font-bold mb-4">Order Summary</h2>
-                <div class="space-y-3 mb-6">
-                    <div class="flex justify-between">
-                        <span class="text-gray-600">Subtotal</span>
-                        <span id="subtotal">{{ amount }}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-600">Shipping</span>
-                        <span id="shipping">70.00</span>
-                    </div>
-                    <div class="flex justify-between font-bold pt-3 border-t">
-                        <span>Total</span>
-                        <span id="total">{{ total_amount }}</span>
-                    </div>
-                </div>
-                <a href="{% url 'Check_out' %}">
-                <button class="w-full bg-black text-white py-3 rounded hover:bg-gray-800">
-                    Proceed to Checkout
-                </button>
-                </a>
-                <div class="mt-4">
-                    <input type="text" placeholder="Enter promo code" class="w-full border p-2 rounded mb-2" />
-                    <button class="w-full border border-black py-2 rounded hover:bg-gray-100">
-                        Apply
-                    </button>
-                </div>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <h2 class="text-xl font-bold mb-4">Shipping Information</h2>
-                <div class="space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <i data-feather="truck" class="text-gray-400"></i>
-                        <div>
-                            <p class="font-medium">Free Shipping</p>
-                            <p class="text-sm text-gray-500">On orders over $100</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-3">
-                        <i data-feather="refresh-cw" class="text-gray-400"></i>
-                        <div>
-                            <p class="font-medium">Easy Returns</p>
-                            <p class="text-sm text-gray-500">30 day return policy</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </aside>
+    {% if not user.is_authenticated %}
+    <div class="text-center py-16">
+        <div class="mx-auto w-24 h-24 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-full h-full text-gray-300">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+        </div>
+        <h2 class="text-xl font-medium mb-2">Please log in to view your cart</h2>
+        <p class="text-gray-500 mb-6">Sign in to access your shopping cart and complete your purchase</p>
+        <a href="{% url 'login' %}" class="inline-block bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition">
+            Sign In
+        </a>
     </div>
+    {% else %}
+        {% if not carts %}
+        <div class="text-center py-16">
+            <div class="mx-auto w-24 h-24 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-full h-full text-gray-300">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+            </div>
+            <h2 class="text-xl font-medium mb-2">Your cart is empty</h2>
+            <p class="text-gray-500 mb-6">Browse our collections and add items to your cart</p>
+            <a href="{% url 'Home' %}" class="inline-block bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition">
+                Explore Collections
+            </a>
+        </div>
+        {% else %}
+        <div class="grid md:grid-cols-3 gap-8">
+            <section class="md:col-span-2 space-y-6">
+                {% for cart in carts %}
+                <div class="bg-white p-6 rounded-lg shadow-sm flex space-x-6" data-price="{{ cart.product.discounted_price }}">
+                    <!-- Cart item content (unchanged) -->
+                    <img src="{{cart.product.image.url}}" alt="{{ cart.product.name }}" class="w-48 h-56 object-cover rounded" />
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-medium">{{cart.product.name}}</h3>
+                                <p class="text-gray-500 mt-1">Size: M</p>
+                                <p class="text-gray-500 mt-1">Color: Color</p>
+                                <p class="text-red-500 font-bold text-xl mt-3">{{ cart.product.selling_price }}</p>
+                                <p class="text-gray-500 line-through">{{ cart.product.discounted_price }}</p>
+                            </div>
+                            <button class="text-gray-400 hover:text-gray-600 remove-item">
+                                <i data-feather="x"></i>
+                            </button>
+                        </div>
+                        <div class="mt-6">
+                            <div class="flex items-center">
+                                <form method="POST" action="{% url 'update_cart_quantity' cart.id %}" class="inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="decrease">
+                                    <button type="submit" class="border rounded-l px-4 py-2 hover:bg-gray-100">-</button>
+                                </form>
+
+                                <input type="number" value="{{ cart.quantity }}" min="1" class="border-t border-b w-20 py-2 text-center" readonly />
+
+                                <form method="POST" action="{% url 'update_cart_quantity' cart.id %}" class="inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="increase">
+                                    <button type="submit" class="border rounded-r px-4 py-2 hover:bg-gray-100">+</button>
+                                </form>
+                            </div>
+                        </div>
+                        <br>
+                        <form method="POST" action="{% url 'remove_from_cart' cart.id %}" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" class="add-to-cart w-full bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition duration-300">
+                                remove
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </section>
+
+            <aside class="space-y-6">
+                <!-- Order summary and shipping info sections (unchanged) -->
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-xl font-bold mb-4">Order Summary</h2>
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Subtotal</span>
+                            <span id="subtotal">{{ amount }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Shipping</span>
+                            <span id="shipping">70.00</span>
+                        </div>
+                        <div class="flex justify-between font-bold pt-3 border-t">
+                            <span>Total</span>
+                            <span id="total">{{ total_amount }}</span>
+                        </div>
+                    </div>
+                    <a href="{% url 'Check_out' %}">
+                        <button class="w-full bg-black text-white py-3 rounded hover:bg-gray-800">
+                            Proceed to Checkout
+                        </button>
+                    </a>
+                    <div class="mt-4">
+                        <input type="text" placeholder="Enter promo code" class="w-full border p-2 rounded mb-2" />
+                        <button class="w-full border border-black py-2 rounded hover:bg-gray-100">
+                            Apply
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h2 class="text-xl font-bold mb-4">Shipping Information</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <i data-feather="truck" class="text-gray-400"></i>
+                            <div>
+                                <p class="font-medium">Free Shipping</p>
+                                <p class="text-sm text-gray-500">On orders over ₹2000</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i data-feather="refresh-cw" class="text-gray-400"></i>
+                            <div>
+                                <p class="font-medium">Easy Returns</p>
+                                <p class="text-sm text-gray-500">30 day return policy</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+        {% endif %}
+    {% endif %}
 </main>
 {% endblock %}
-
-
 
 {% block product-grid %}
 {% endblock %}

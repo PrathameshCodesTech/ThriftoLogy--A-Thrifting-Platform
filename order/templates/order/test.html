@@ -171,7 +171,8 @@
         <p class="total-cost">Total Cost + Rs. 70 = {{total_amount}}</p>
         <p class="delivery-charge">(Rs. 70 Delivery Charge)</p>
         <div class="divider"></div>
-        <p class="terms">Term and Condition: Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, ullam saepe! Iure optio repellat dolor velit, minus rem.</p>
+        <p class="terms">Term and Condition: Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, ullam
+            saepe! Iure optio repellat dolor velit, minus rem.</p>
     </div>
 
     <!-- Right Column - Address Selection -->
@@ -181,21 +182,20 @@
 
         <form action="/paymentdone" id="myform">
             {% for ad in add %}
-            <div class="address-selection">
-                <h3 class="address-name">{{ad.name}}</h3>
-                <p class="address-details">{{ad.locality}}, {{ad.city}}, {{ad.state}}- {{ad.zipcode}}</p>
-                
-                <div class="radio-group">
-                    <label class="radio-label" for="custadd{{forloop.counter}}">
-                        <input type="radio" name="custid" id="custadd{{forloop.counter}}" 
-                               value="{{ad.id}}" {% if forloop.first %}checked{% endif %}>
-                        <span>Address: {{ forloop.counter }}</span>
-                    </label>
-                </div>
+            <div class="card">
+              <div class="card-body">
+              <h5>{{ad.name}}</h5>
+              <p>{{ad.locality}}, {{ad.city}}, {{ad.state}}- {{ad.zipcode}}</p>
+              </div>
             </div>
+              <div class="form-check mt-2 mb-5">
+                <input class="form-check-input" type="radio" name="custid" id="custadd{{forloop.counter}}" value="{{ad.id}}" checked>
+                <label class="form-check-label fw-bold" for="custadd{{forloop.counter}}">
+                  Address: {{ forloop.counter }} </label>
+              </div>
             {% endfor %}
 
-            <div class="payment-options">
+            <!-- <div class="payment-options">
                 <h3 class="section-title">Payment Options:</h3>
                 <button type="button" class="payment-button paypal-button">
                     PayPal
@@ -204,10 +204,35 @@
                     Debit or Credit Card
                 </button>
                 <p class="powered-by">Powered by PayPal</p>
-            </div>
+            </div> -->
         </form>
     </div>
 </div>
+<div class="payment-options">
+    <h3 class="section-title">Payment Options:</h3>
+
+    <!-- Razorpay Payment Button -->
+    <form action="{{ callback_url }}" method="POST">
+        <script 
+            src="https://checkout.razorpay.com/v1/checkout.js"
+            data-key="{{ razorpay_key }}"
+            data-amount="{{ razorpay_amount }}"
+            data-currency="{{ currency }}"
+            data-order_id="{{ razorpay_order_id }}"
+            data-buttontext="Pay with Razorpay"
+            data-name="Your Store"
+            data-description="Test Transaction"
+            data-image="{% static 'images/your-logo.png' %}"
+            data-prefill.name="{{ request.user.first_name }}"
+            data-prefill.email="{{ request.user.email }}"
+            data-theme.color="#F37254"
+        ></script>
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    </form>
+</div>
+
+
+
 {% endblock %}
 
 {% block product-grid %}

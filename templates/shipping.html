@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block herosection %}
+<!-- Hero Section -->
+<section class="pt-32 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 py-16">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-4">Payment & Shipping Information</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Everything you need to know about payments and delivery at Thriftology</p>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Categories -->
+<section class="py-16">
+    <div class="max-w-4xl mx-auto px-4">
+        <!-- Payment Methods -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">Payment Methods</h2>
+            
+            <div class="space-y-6">
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">What payment methods do you accept?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">We accept multiple payment methods for your convenience:</p>
+                        <ul class="list-disc ml-6 mt-2 space-y-2">
+                            <li>Razorpay (Credit/Debit Cards, UPI, Netbanking)</li>
+                            <li>PayPal</li>
+                            <li>Cash on Delivery (COD) with additional ₹50 fee</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">Is it safe to use my card on your website?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">Yes, all payments are processed securely through Razorpay or PayPal's encrypted payment gateways. We never store your card details on our servers.</p>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">What are the COD terms?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">Cash on Delivery is available for orders up to ₹10,000. A nominal fee of ₹50 is charged for COD orders. COD may be restricted in certain pin codes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shipping Information -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">Shipping Information</h2>
+            
+            <div class="space-y-6">
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">What are your delivery timeframes?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">Our standard delivery timeframes are:</p>
+                        <ul class="list-disc ml-6 mt-2 space-y-2">
+                            <li>Metro Cities: 2-3 business days</li>
+                            <li>Other Cities: 3-5 business days</li>
+                            <li>Remote Areas: 5-7 business days</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">How much does shipping cost?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">Shipping rates:</p>
+                        <ul class="list-disc ml-6 mt-2 space-y-2">
+                            <li>Free shipping on orders above ₹2000</li>
+                            <li>Standard shipping: ₹70</li>
+                            <li>Express shipping (where available): ₹199</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Tracking -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">Order Tracking</h2>
+            
+            <div class="space-y-6">
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">How can I track my order?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">Once your order is shipped, you'll receive a tracking number via email and SMS. You can track your order on our website or through the courier partner's website.</p>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">What if my order is delayed?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">If your order is delayed beyond the estimated delivery time, please contact our customer support. We'll investigate with our shipping partner and keep you updated.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- International Shipping -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-6">International Shipping</h2>
+            
+            <div class="space-y-6">
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">Do you ship internationally?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">Yes, we ship to select countries. International shipping costs and delivery times vary by location. Please note that customers are responsible for any import duties or taxes.</p>
+                    </div>
+                </div>
+
+                <div class="border-b border-gray-200 pb-6">
+                    <button class="flex justify-between items-center w-full text-left">
+                        <h3 class="text-lg font-medium">What are the international shipping rates?</h3>
+                        <i data-feather="plus" class="w-5 h-5"></i>
+                    </button>
+                    <div class="mt-3">
+                        <p class="text-gray-600">International shipping rates start at ₹1499 and vary based on:</p>
+                        <ul class="list-disc ml-6 mt-2 space-y-2">
+                            <li>Destination country</li>
+                            <li>Package weight and dimensions</li>
+                            <li>Shipping method selected</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+{% block product-grid %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    feather.replace()
+</script>
+<script>
+    // Toggle FAQ answers
+    document.querySelectorAll('button').forEach(button => {
+        button.addEventListener('click', () => {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            answer.classList.toggle('hidden');
+            icon.dataset.feather = answer.classList.contains('hidden') ? 'plus' : 'minus';
+            feather.replace();
+        });
+    });
+</script>
+
+{% endblock %}
+
+{

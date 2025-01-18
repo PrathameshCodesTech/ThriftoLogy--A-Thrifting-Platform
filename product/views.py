@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from product.models import Product,Cart,Wishlist
 from django.views import View
-from decimal import Decimal
+from decimal import Decimal 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
@@ -26,36 +26,208 @@ def Home(request):
     }
     return render(request, 'product/clothesGallery.html', context)
 
+# def OuterWear(request):
+#     products = Product.objects.filter(category="Outerwear")
+#     brands = Product.objects.filter(category="Outerwear").values_list('brand', flat=True).distinct()
+    
+#     # Handle brand filter
+#     brand = request.GET.get('brand')
+#     if brand and brand != 'All':
+#         products = products.filter(brand=brand)
+    
+#     # Handle search query
+#     query = request.GET.get('query')
+#     if query and query!='None':
+#         products = products.filter(brand__icontains=query) or products.filter(name__icontains=query)
+
+#     # Handle sorting
+#     sort_by = request.GET.get('sort_by')
+#     if sort_by == 'low_to_high':
+#         products = products.order_by('selling_price')
+#     elif sort_by == 'high_to_low':
+#         products = products.order_by('-selling_price')
+    
+#     context = {
+#         'products': products,
+#         'brands': brands,
+#         'selected_brand': brand,  
+#         'selected_sort': sort_by,
+#         'query': query,
+#     }
+    
+#     return render(request, "product/Outerwear.html", context) 
+
+
 def OuterWear(request):
+    # Base queryset
     products = Product.objects.filter(category="Outerwear")
     brands = Product.objects.filter(category="Outerwear").values_list('brand', flat=True).distinct()
     
-    # Handle brand filter
-    brand = request.GET.get('brand')
+    # Get all filter parameters
+    brand = request.GET.get('brand', '')
+    query = request.GET.get('query', '')
+    sort_by = request.GET.get('sort_by', '')
+    
+    # Apply brand filter
     if brand and brand != 'All':
         products = products.filter(brand=brand)
     
-    # Handle search query
-    query = request.GET.get('query')
-    if query and query!='None':
-        products = products.filter(brand__icontains=query) or products.filter(name__icontains=query)
-
-    # Handle sorting
-    sort_by = request.GET.get('sort_by')
+    # Apply search filter - using Q objects for better search
+    if query and query != 'None':
+        from django.db.models import Q
+        products = products.filter(
+            Q(brand__icontains=query) |
+            Q(name__icontains=query) |
+            Q(description__icontains=query)  # Optional: search in description too
+        )
+    
+    # Apply sorting - default to newest if not specified
     if sort_by == 'low_to_high':
         products = products.order_by('selling_price')
     elif sort_by == 'high_to_low':
         products = products.order_by('-selling_price')
+    else:  # default sorting
+        products = products.order_by('-id')  # Assuming newer products have higher IDs
     
     context = {
         'products': products,
         'brands': brands,
-        'selected_brand': brand,  
+        'selected_brand': brand,
         'selected_sort': sort_by,
         'query': query,
     }
     
     return render(request, "product/Outerwear.html", context)
+
+
+
+
+def Top(request):
+    # Base queryset
+    products = Product.objects.filter(category="Top")
+    brands = Product.objects.filter(category="Top").values_list('brand', flat=True).distinct()
+    
+    # Get all filter parameters
+    brand = request.GET.get('brand', '')
+    query = request.GET.get('query', '')
+    sort_by = request.GET.get('sort_by', '')
+    
+    # Apply brand filter
+    if brand and brand != 'All':
+        products = products.filter(brand=brand)
+    
+    # Apply search filter - using Q objects for better search
+    if query and query != 'None':
+        from django.db.models import Q
+        products = products.filter(
+            Q(brand__icontains=query) |
+            Q(name__icontains=query) |
+            Q(description__icontains=query)  # Optional: search in description too
+        )
+    
+    # Apply sorting - default to newest if not specified
+    if sort_by == 'low_to_high':
+        products = products.order_by('selling_price')
+    elif sort_by == 'high_to_low':
+        products = products.order_by('-selling_price')
+    else:  # default sorting
+        products = products.order_by('-id')  # Assuming newer products have higher IDs
+    
+    context = {
+        'products': products,
+        'brands': brands,
+        'selected_brand': brand,
+        'selected_sort': sort_by,
+        'query': query,
+    }
+    
+    return render(request, "product/Top.html", context)
+
+
+def Bottom(request):
+    # Base queryset
+    products = Product.objects.filter(category="Bottom")
+    brands = Product.objects.filter(category="Bottom").values_list('brand', flat=True).distinct()
+    
+    # Get all filter parameters
+    brand = request.GET.get('brand', '')
+    query = request.GET.get('query', '')
+    sort_by = request.GET.get('sort_by', '')
+    
+    # Apply brand filter
+    if brand and brand != 'All':
+        products = products.filter(brand=brand)
+    
+    # Apply search filter - using Q objects for better search
+    if query and query != 'None':
+        from django.db.models import Q
+        products = products.filter(
+            Q(brand__icontains=query) |
+            Q(name__icontains=query) |
+            Q(description__icontains=query)  # Optional: search in description too
+        )
+    
+    # Apply sorting - default to newest if not specified
+    if sort_by == 'low_to_high':
+        products = products.order_by('selling_price')
+    elif sort_by == 'high_to_low':
+        products = products.order_by('-selling_price')
+    else:  # default sorting
+        products = products.order_by('-id')  # Assuming newer products have higher IDs
+    
+    context = {
+        'products': products,
+        'brands': brands,
+        'selected_brand': brand,
+        'selected_sort': sort_by,
+        'query': query,
+    }
+    
+    return render(request, "product/Bottom.html", context)
+
+
+def Kicks(request):
+    # Base queryset
+    products = Product.objects.filter(category="ChicKicks")
+    brands = Product.objects.filter(category="ChicKicks").values_list('brand', flat=True).distinct()
+    
+    # Get all filter parameters
+    brand = request.GET.get('brand', '')
+    query = request.GET.get('query', '')
+    sort_by = request.GET.get('sort_by', '')
+    
+    # Apply brand filter
+    if brand and brand != 'All':
+        products = products.filter(brand=brand)
+    
+    # Apply search filter - using Q objects for better search
+    if query and query != 'None':
+        from django.db.models import Q
+        products = products.filter(
+            Q(brand__icontains=query) |
+            Q(name__icontains=query) |
+            Q(description__icontains=query)  # Optional: search in description too
+        )
+    
+    # Apply sorting - default to newest if not specified
+    if sort_by == 'low_to_high':
+        products = products.order_by('selling_price')
+    elif sort_by == 'high_to_low':
+        products = products.order_by('-selling_price')
+    else:  # default sorting
+        products = products.order_by('-id')  # Assuming newer products have higher IDs
+    
+    context = {
+        'products': products,
+        'brands': brands,
+        'selected_brand': brand,
+        'selected_sort': sort_by,
+        'query': query,
+    }
+    
+    return render(request, "product/Kicks.html", context)
+
+
 
 
 class ProductDetail(View):
@@ -74,6 +246,11 @@ class ProductDetail(View):
 
 
 def AddCart(request):
+     # Check if the user is authenticated
+    if not request.user.is_authenticated:
+        messages.error(request, "You need to log in first to add items to the cart.")
+        return redirect('Home')  # Replace 'login' with the name of your login URL pattern
+    
     user = request.user
     product_id = request.GET.get('prod_id') 
     try:
@@ -202,3 +379,6 @@ def remove_from_wishlist(request, product_id):
     Wishlist.objects.filter(user=request.user, product_id=product_id).delete()
     messages.success(request, 'Product removed from wishlist!')
     return redirect(request.META.get('HTTP_REFERER', 'wishlist'))
+
+
+

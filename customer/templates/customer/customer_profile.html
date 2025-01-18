@@ -17,10 +17,29 @@
             </div>
             <div class="flex-1">
                 <p class="text-sm font-medium text-gray-900">{{ message }}</p>
+                <p class="text-sm text-gray-500 mt-1">Redirecting in <span id="countdown">8</span> seconds...</p>
             </div>
         </div>
         {% endfor %}
     </div>
+
+    <script>
+        // Start countdown and redirect
+        let timeLeft = 8;
+        const countdownElement = document.getElementById('countdown');
+        
+        const countdownInterval = setInterval(() => {
+            timeLeft--;
+            if (countdownElement) {
+                countdownElement.textContent = timeLeft;
+            }
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = "{% url 'Home' %}";  // Replace 'login' with your actual login URL name
+            }
+        }, 1000);
+    </script>
 {% endif %}
 
 <main class="pt-32 max-w-7xl mx-auto px-4 mb-12">

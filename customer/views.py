@@ -12,21 +12,42 @@ from django.utils.decorators import method_decorator
 
 # Create your views here.
 
-class CustomerRegistrationView(View):
-    def get(self, request):
-        form = CustomerRegistrationForm()
-        return render(request, 'customer/customer_registration.html', {'form': form})
+# !!!!!!
+# class CustomerRegistrationView(View):
+#     def get(self, request):
+#         form = CustomerRegistrationForm()
+#         return render(request, 'customer/customer_registration.html', {'form': form})
 
-    def post(self, request):
-        form = CustomerRegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Your account is successfully created. 🌟 Start exploring our unique, pre-loved pieces and embrace sustainable fashion. Happy thrifting! 🛍️')
-            return render(request, 'customer/customer_registration.html', {'form': CustomerRegistrationForm(), 'redirect_after_message': True})
-        else:
-            messages.error(request, 'There was an error with your registration. Please try again.')
-        return render(request, 'customer/customer_registration.html', {'form': form})
-    
+#     def post(self, request):
+#         form = CustomerRegistrationForm(request.POST)
+#         if form.is_valid():
+#             messages.success(request, 'Your account is successfully created. 🌟 Start exploring our unique, pre-loved pieces and embrace sustainable fashion. Happy thrifting! 🛍️')
+#             form.save()     
+#             return render(request, 'customer/customer_registration.html', {'form': CustomerRegistrationForm(), 'redirect_after_message': True})
+#         else:
+#             messages.error(request, 'There was an error with your registration. Please try again.')
+#         return render(request, 'customer/customer_registration.html', {'form': form})
+
+
+# !SECTION LAST ADJUSTMENT - Registration !
+
+class CustomerRegistrationView(View):
+ def get(self, request):
+  form = CustomerRegistrationForm()
+  return render(request, 'customer/customer_registration.html', {'form':form})
+  
+ def post(self, request):
+  form = CustomerRegistrationForm(request.POST)
+  if form.is_valid():
+       messages.success(request, 'Your account is successfully created. Please Log-in And 🌟 Start exploring our unique, pre-loved pieces and embrace sustainable fashion. Happy thrifting! 🛍️')
+       form.save()
+       return render(request, 'customer/customer_registration.html', {'form':form})
+  else:
+      messages.error(request, 'There was an error with your registration. Please try again.') 
+      return render(request, 'customer/customer_registration.html', {'form': form})
+  
+
+# !SECTION LAST ADJUSTMENT -Redirecting ! 
 class CustomPasswordChangeView(PasswordChangeView):
     def form_valid(self, form):
         form.save()
@@ -35,6 +56,8 @@ class CustomPasswordChangeView(PasswordChangeView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
+# !!!!!!!!!!!
+# hitesh Sir
 # @method_decorator(login_required, name='dispatch')
 # class ProfileView(View):
 #     def get(self, request):
@@ -66,6 +89,49 @@ class CustomPasswordChangeView(PasswordChangeView):
 
 
 
+# @method_decorator(login_required, name='dispatch')
+# class ProfileView(View):
+# 	def get(self, request):
+# 		totalitem = 0
+# 		if request.user.is_authenticated:
+# 			totalitem = len(Cart.objects.filter(user=request.user))
+# 		form = CustomerProfileForm()
+# 		return render(request, 'customer/customer_profile.html', {'form':form, 'active':'btn-primary', 'totalitem':totalitem})
+		
+# 	def post(self, request):
+# 		totalitem = 0
+# 		if request.user.is_authenticated:
+# 			totalitem = len(Cart.objects.filter(user=request.user))
+# 		form = CustomerProfileForm(request.POST)
+# 		if form.is_valid():
+# 			usr = request.user
+# 			name  = form.cleaned_data['name']
+# 			locality = form.cleaned_data['locality']
+# 			city = form.cleaned_data['city']
+# 			state = form.cleaned_data['state']
+# 			zipcode = form.cleaned_data['zipcode']
+# 			reg = Customer(user=usr, name=name, locality=locality, city=city, state=state, zipcode=zipcode)
+# 			reg.save()
+# 			messages.success(request, 'Congratulations!! Profile Updated Successfully.')
+# 		return render(request, 'customer/customer_profile.html', {'form':form, 'active':'btn-primary', 'totalitem':totalitem})
+
+
+
+def About(request):
+      return render(request,"aboutUs.html")
+
+def Faq(request):
+      return render(request,"FAQ.html")
+
+def Reviews(request):
+      return render(request,"reviews.html")
+
+def Shipping(request):
+      return render(request,"shipping.html")
+
+
+
+
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
 	def get(self, request):
@@ -91,14 +157,3 @@ class ProfileView(View):
 			reg.save()
 			messages.success(request, 'Congratulations!! Profile Updated Successfully.')
 		return render(request, 'customer/customer_profile.html', {'form':form, 'active':'btn-primary', 'totalitem':totalitem})
-
-
-
-def About(request):
-      return render(request,"aboutUs.html")
-
-def Faq(request):
-      return render(request,"FAQ.html")
-
-def Reviews(request):
-      return render(request,"reviews.html")

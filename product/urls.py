@@ -1,10 +1,18 @@
 from django.urls import path
-from product.views import Home,OuterWear,ProductDetail,AddCart,ShowCart,update_cart_quantity,remove_from_cart,wishlist,add_to_wishlist,remove_from_wishlist
+from product.views import Home,OuterWear,Top,Bottom,Kicks,ProductDetail,AddCart,ShowCart,update_cart_quantity,remove_from_cart,wishlist,add_to_wishlist,remove_from_wishlist
 
 
 urlpatterns = [
+    
     path('',Home , name='Home'),
     path('Outer-wear/',OuterWear,name="Outer-wear"),
+    path('Top-wear/',Top,name="Top"),
+    path('Bottom-wear/',Bottom,name="Bottom"),
+    path('Kicks-wear/',Kicks,name="Kicks"),
+   
+
+
+
     path('details/<int:pk>',ProductDetail.as_view(),name="Detail"),
 
     path('add-to-cart/',AddCart,name="Add_Cart"),

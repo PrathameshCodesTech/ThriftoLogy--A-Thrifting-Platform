@@ -12,21 +12,21 @@ from django.conf import settings
 from razorpay import Client
 import pkg_resources
 
-@login_required
-def checkout(request):
-    user = request.user
-    add = Customer.objects.filter(user=user)
-    cart_items = Cart.objects.filter(user=user)
-    amount = Decimal('0.0')  # Initialize as Decimal
-    shipping_amount = Decimal('70.0')  # Convert shipping amount to Decimal
-    total_amount = Decimal('0.0')  # Initialize as Decimal
-    cart_product = [p for p in Cart.objects.all() if p.user == user]
-    if cart_product:
-        for p in cart_product:
-            # Ensure discounted_price is Decimal
-            tempamount = p.quantity * p.product.discounted_price
-            amount += tempamount
-        total_amount = amount + shipping_amount
+# @login_required
+# def checkout(request):
+#     user = request.user
+#     add = Customer.objects.filter(user=user)
+#     cart_items = Cart.objects.filter(user=user)
+#     amount = Decimal('0.0')  # Initialize as Decimal
+#     shipping_amount = Decimal('70.0')  # Convert shipping amount to Decimal
+#     total_amount = Decimal('0.0')  # Initialize as Decimal
+#     cart_product = [p for p in Cart.objects.all() if p.user == user]
+#     if cart_product:
+#         for p in cart_product:
+#             # Ensure discounted_price is Decimal
+#             tempamount = p.quantity * p.product.discounted_price
+#             amount += tempamount
+#         total_amount = amount + shipping_amount
 
 
 
@@ -44,7 +44,7 @@ def checkout(request):
 
     # hitesh END here!
 
-    return render(request, 'order/test.html', {'add': add, 'total_amount': total_amount, 'cart_items': cart_items})
+    # return render(request, 'order/test.html', {'add': add, 'total_amount': total_amount, 'cart_items': cart_items})
 
 
 
@@ -64,95 +64,72 @@ def checkout(request):
 #     return redirect('Home')
       
 
-# from uuid import uuid4
-# from decimal import Decimal
-# from django.shortcuts import redirect
-# import razorpay
-# from django.conf import settings
 
-# @login_required
-# def checkout(request):
-#     user = request.user
-#     add = Customer.objects.filter(user=user)
-#     cart_items = Cart.objects.filter(user=user)
+import razorpay
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
-#     # Calculate total amount
-#     amount = Decimal('0.0')
-#     shipping_amount = Decimal('70.0')
-#     total_amount = Decimal('0.0')
+@login_required
+def checkout(request):
+    user = request.user
+    add = Customer.objects.filter(user=user)
+    cart_items = Cart.objects.filter(user=user)
+    
+    amount = Decimal('0.0')
+    shipping_amount = Decimal('70.0')
+    total_amount = Decimal('0.0')
+    
+    cart_product = [p for p in Cart.objects.all() if p.user == user]
+    if cart_product:
+        for p in cart_product:
+            tempamount = p.quantity * p.product.discounted_price
+            amount += tempamount
+        total_amount = amount + shipping_amount
 
-#     if cart_items:
-#         for item in cart_items:
-#             amount += item.quantity * item.product.discounted_price
-#         total_amount = amount + shipping_amount
+    # Convert to paise for Razorpay (1 INR = 100 paise)
+    razorpay_amount = int(total_amount * 100)
 
-#     # Create Order
-#     order = Order.objects.create(
-#         user=user,
-#         total=total_amount,
-#     )
-
-#     # Create OrderDetails for each cart item
-#     for item in cart_items:
-#         OrderDetails.objects.create(
-#             order_id=order,
-#             product=item.product,
-#             quantity=item.quantity,
-#             price=item.product.discounted_price,
-#         )
-
-#     # Create Razorpay order
-#     client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-#     razorpay_order = client.order.create({
-#         'amount': int(total_amount * 100),  # Amount in paisa
-#         'currency': 'INR',
-#         'payment_capture': '1'
-#     })
-
-#     # Save Razorpay order ID to the Order for verification
-#     order.razorpay_order_id = razorpay_order['id']
-#     order.save()
-
-#     # Pass details to template
-#     return render(request, 'order/test.html', {
-#         'add': add,
-#         'cart_items': cart_items,
-#         'total_amount': total_amount,
-#         'razorpay_order_id': razorpay_order['id'],
-#         'razorpay_key_id': settings.RAZORPAY_KEY_ID,
-#     })
+    # Razorpay Client Setup
+    client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+    
+    # Create Razorpay Order
+    razorpay_order = client.order.create({
+        "amount": razorpay_amount,  # Razorpay accepts amount in paise
+        "currency": "INR",
+        "payment_capture": "1"  # Automatic capture
+    })
+    
+    # Pass the Razorpay order details to template
+    context = {
+        'add': add,
+        'total_amount': total_amount,
+        'razorpay_amount': razorpay_amount,
+        'cart_items': cart_items,
+        'razorpay_order_id': razorpay_order['id'],
+        'razorpay_key': settings.RAZORPAY_KEY_ID,
+        'currency': "INR",
+        'callback_url': '/payment-handler/'
+    }
+    
+    return render(request, 'order/test.html', context)
 
 
-# from django.views.decorators.csrf import csrf_exempt
-# from django.http import HttpResponseBadRequest
-
-# @csrf_exempt
-# def payment_done(request):
-#     if request.method == "POST":
-#         try:
-#             payment_id = request.POST.get('razorpay_payment_id', '')
-#             order_id = request.POST.get('razorpay_order_id', '')
-#             signature = request.POST.get('razorpay_signature', '')
-
-#             # Verify Razorpay signature
-#             client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-#             client.utility.verify_payment_signature({
-#                 'razorpay_order_id': order_id,
-#                 'razorpay_payment_id': payment_id,
-#                 'razorpay_signature': signature
-#             })
-
-#             # Update the Order status
-#             order = Order.objects.get(razorpay_order_id=order_id)
-#             order.status = 'paid'
-#             order.save()
-
-#             # Clear the cart
-#             Cart.objects.filter(user=order.user).delete()
-
-#             return render(request, 'order/success.html', {'order': order})
-#         except razorpay.errors.SignatureVerificationError:
-#             return HttpResponseBadRequest("Invalid Payment Signature")
-#         except Order.DoesNotExist:
-#             return HttpResponseBadRequest("Order not found")
-#     return HttpResponseBadRequest("Invalid Request")
+@csrf_exempt
+def payment_handler(request):
+    if request.method == "POST":
+        try:
+            # Verify Razorpay payment signature
+            client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+            params_dict = {
+                'razorpay_order_id': request.POST.get('razorpay_order_id'),
+                'razorpay_payment_id': request.POST.get('razorpay_payment_id'),
+                'razorpay_signature': request.POST.get('razorpay_signature')
+            }
+            client.utility.verify_payment_signature(params_dict)
+            
+            # Payment successful, update order status
+            return JsonResponse({'status': 'Payment successful!'})
+        except razorpay.errors.SignatureVerificationError:
+            return JsonResponse({'status': 'Payment verification failed.'})
+    return JsonResponse({'status': 'Invalid request.'})
